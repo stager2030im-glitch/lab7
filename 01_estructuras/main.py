@@ -22,12 +22,37 @@ Al terminar: git commit -m "Resuelve ejercicio 01".
 """
 
 def resumir_ventas(ventas):
-    # TODO: implementa lo solicitado y devuelve el resultado.
-    pass
-
-
-# Ejemplo de uso: inicialmente imprime None porque falta la implementación.
+    productos = set()
+    unidades = 0
+    por_producto = {}
+ 
+    for producto, cantidad in ventas:
+        productos.add(producto)
+        unidades += cantidad
+        if producto in por_producto:
+            por_producto[producto] += cantidad
+        else:
+            por_producto[producto] = cantidad
+ 
+    return {
+        "productos": productos,
+        "unidades": unidades,
+        "por_producto": por_producto,
+    }
+ 
+ 
+# Ejemplo de uso del enunciado.
 ventas = [("cafe", 2), ("te", 1), ("cafe", 3)]
 print(resumir_ventas(ventas))
-
-# TODO: añade otro ejemplo con print y su resultado esperado en un comentario.
+# Esperado: {'productos': {'cafe', 'te'}, 'unidades': 6,
+#            'por_producto': {'cafe': 5, 'te': 1}}  (el set puede salir en otro orden)
+ 
+# Otro ejemplo: varios productos, uno repetido tres veces.
+ventas2 = [("pan", 4), ("leche", 2), ("pan", 1), ("queso", 3), ("pan", 5)]
+print(resumir_ventas(ventas2))
+# Esperado: {'productos': {'pan', 'leche', 'queso'}, 'unidades': 15,
+#            'por_producto': {'pan': 10, 'leche': 2, 'queso': 3}}  (set en cualquier orden)
+ 
+# Caso borde: lista vacía.
+print(resumir_ventas([]))
+# Esperado: {'productos': set(), 'unidades': 0, 'por_producto': {}}
